@@ -7,39 +7,6 @@ var orderListArray = [];
 var completedOrderArray = [];
 var deletedArray = [];
 
-var handleSubmit = function(event) {
-    event.preventDefault();
-    createOrder();
-}
-
-var handleCompletedButton = function(event) {
-    event.preventDefault();
-    checkBoxOrders = orderList.querySelectorAll('input[type=checkbox]:checked')
-    checkBoxOrders.forEach(function(element) {
-        parent = element.parentElement;
-        console.log(parent);
-        completedList.appendChild(parent);
-    });
-}
-
-var deleteOrder = function(event) {
-    event.preventDefault();
-    checkBoxOrders = orderList.querySelectorAll('input[type=checkbox]:checked')
-    completedCheckBoxOrders = completedList.querySelectorAll('input[type=checkbox]:checked')
-    checkBoxOrders.forEach(function(element) {
-        parent = element.parentElement;
-        if (parent.parentNode) {
-            parent.parentNode.removeChild(parent);
-        }
-    });
-    completedCheckBoxOrders.forEach(function(element) {
-        parent = element.parentElement;
-        if (parent.parentNode) {
-            parent.parentNode.removeChild(parent);
-        }
-    });
-}
-
 var createOrder = function() {
     var coffeeOrder = document.querySelector('[name="coffee-order"]');
     var emailInput = document.querySelector('[name="email"]');
@@ -66,13 +33,44 @@ var createOrder = function() {
     orderList.appendChild(order);
 }
 
-// var createPosition = function() {
-//     orderListArray.forEach(function(order, i) {
-//         order.position = i;
-//     });
-// }
+var handleSubmit = function(event) {
+    event.preventDefault();
+    createOrder();
+}
 
-// createPosition();
+var handleCompletedButton = function(event) {
+    event.preventDefault();
+    checkBoxOrders = orderList.querySelectorAll('input[type=checkbox]:checked')
+    checkBoxOrders.forEach(function(element, position) {
+        parent = element.parentElement;
+        console.log(parent);
+        completedList.appendChild(parent);
+        var order = orderListArray.splice(position, 1);
+        console.log(orderListArray);
+        completedOrderArray.push(order);
+        console.log(completedOrderArray);
+    });
+}
+
+var deleteOrder = function(event) {
+    event.preventDefault();
+    checkBoxOrders = orderList.querySelectorAll('input[type=checkbox]:checked')
+    completedCheckBoxOrders = completedList.querySelectorAll('input[type=checkbox]:checked')
+    checkBoxOrders.forEach(function(element, position) {
+        parent = element.parentElement;
+        if (parent.parentNode) {
+            parent.parentNode.removeChild(parent);
+            orderListArray.splice(position, 1);
+        }
+    });
+    completedCheckBoxOrders.forEach(function(element, position) {
+        parent = element.parentElement;
+        if (parent.parentNode) {
+            parent.parentNode.removeChild(parent);
+            completedOrderArray.splice(position, 1);
+        }
+    });
+}
 
 coffeeOrderForm.addEventListener('submit', handleSubmit);
 completedOrderForm.addEventListener('submit', handleCompletedButton);
