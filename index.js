@@ -5,7 +5,6 @@ var orderList = document.querySelector('.order-list');
 var completedList = document.querySelector('.completed-order-list');
 var orderListArray = [];
 var completedOrderArray = [];
-var deletedArray = [];
 
 var createOrder = function() {
     var coffeeOrder = document.querySelector('[name="coffee-order"]');
@@ -33,9 +32,15 @@ var createOrder = function() {
     orderList.appendChild(order);
 }
 
+var updateOrderLists = function() {
+    localStorage.setItem('pending-orders', JSON.stringify(orderListArray));
+    localStorage.setItem('completed-orders', JSON.stringify(completedOrderArray))
+}
+
 var handleSubmit = function(event) {
     event.preventDefault();
     createOrder();
+    updateOrderLists();
 }
 
 var handleCompletedButton = function(event) {
@@ -50,6 +55,7 @@ var handleCompletedButton = function(event) {
         completedOrderArray.push(order);
         console.log(completedOrderArray);
     });
+    updateOrderLists();
 }
 
 var deleteOrder = function(event) {
@@ -70,6 +76,7 @@ var deleteOrder = function(event) {
             completedOrderArray.splice(position, 1);
         }
     });
+    updateOrderLists();
 }
 
 coffeeOrderForm.addEventListener('submit', handleSubmit);
