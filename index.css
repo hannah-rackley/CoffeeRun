@@ -1,0 +1,21 @@
+body, html {
+    width: 100%;
+    font-size: 1.1em;
+    padding: 1em;
+}
+
+.label {
+    font-weight: bold;
+    margin-top: 1em;
+}
+.radio {
+    margin-top: 1em;
+}
+
+.block {
+    display: block;
+}
+
+.coffee-order-form {
+    box-sizing: border-box;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>CoffeeRun</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="index.css" />
+</head>
+<header>
+    <h1>CoffeeRun</h1>
+</header>
+<body>
+    <form class="coffee-order-form" action="" method="post">
+        <label>
+            <span class="label block">Coffee Order</span>
+            <input name="coffee-order" type="text" required>
+        </label>
+        <label>
+            <span class="label block">Email</span>
+            <input name="email" type="email" value="dr@who.com" required>
+        </label>
+        <div>
+            <label class="radio block">
+                <input name="size" type="radio" value="Short" checked>
+                Short
+            </label>
+            <label class="radio block">
+                <input name="size" type="radio" value="Tall">
+                Tall
+            </label>
+            <label class="radio block">
+                <input name="size" type="radio" value="Grande">
+                Grande
+            </label>
+        </div>
+        <label>
+            <span class="label block">Flavor Shot</span>
+            <select id="coffee-flavors" name='flavor-shot' required>
+                <option value="">Please choose a flavor</option>
+                <option value="none">None</option>
+                <option value="chocolate">Chocolate</option>
+                <option value='vanilla'>Vanilla</option>
+                <option value="toffee">Toffee</option>
+            </select>
+        </label>
+        <label>
+            <span class="label block">Caffeine Rating</span>
+            <input name="caffeine-rating" type="range">
+        </label>
+        <div>
+            <input type="submit" name="submit">
+            <input type="reset" name="reset">
+        </div>
+    </form>
+    <div class='pending-orders'>
+        <p>Pending Orders</p>
+        <ul class="order-list"></ul>
+    </div>
+    <div class='completed-orders'>
+        <p>Completed Orders</p>
+        <ul class="completed-order-list"></ul>
+    </div>
+    <form class="remove-orders" action="" method="post">
+        <label class="block">
+            Delete Selected Orders
+            <input type="submit" value="Delete" name="delete">
+        </label>
+    </form>
+    <form class="change-order-status" action="" method="post">
+        <label class="block">
+            Mark Selected Orders Completed
+            <input type="submit" value="Completed" name="completed">
+        </label>
+    </form>
+    <script src="index.js"></script>
+</body>
+</html>
