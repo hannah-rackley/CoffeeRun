@@ -6,6 +6,19 @@ var completedList = document.querySelector('.completed-order-list');
 var orderListArray = [];
 var completedOrderArray = [];
 
+var addPendingOrderOnPage = function(orderObject) {
+        orderListArray.push(orderObject);
+        var orderArray = [orderObject["Size"], orderObject["Order"], "with a shot of ", orderObject["Flavor"], "and", orderObject["Caffeine"], "milligrams of caffeine for ", orderObject["Email"]]
+        var order = document.createElement('li');
+        order.setAttribute('class', 'order');
+        order.textContent = orderArray.join(" ");
+        var checkBox = document.createElement("input");
+        checkBox.setAttribute('type', 'checkbox');
+        checkBox.setAttribute('class', 'checkbox')
+        order.appendChild(checkBox);
+        orderList.appendChild(order);    
+}
+
 var createOrder = function() {
     var coffeeOrder = document.querySelector('[name="coffee-order"]');
     var emailInput = document.querySelector('[name="email"]');
@@ -23,18 +36,42 @@ var createOrder = function() {
         "Caffeine": caffeineRating.value, 
         "Checkbox": checkBox.checked, 
     }
-    orderListArray.push(orderContent);
-    var orderArray = [size.value, coffeeOrder.value, "with a shot of ", flavorShot.value, "and", caffeineRating.value, "milligrams of caffeine for ", emailInput.value]
-    var order = document.createElement('li');
-    order.setAttribute('class', 'order');
-    order.textContent = orderArray.join(" ");
-    order.appendChild(checkBox);
-    orderList.appendChild(order);
+    addPendingOrderOnPage(orderContent);
 }
+
+// var addCompletedOrderOnPage = function(array) {
+//     array.forEach(function(order) {
+//         var orderArray = [order["size"], order["Order"], "with a shot of ", order["Flavor"], "and", order["Caffeine"], "milligrams of caffeine for ", order["Email"]]
+//         var order = document.createElement('li');
+//         order.setAttribute('class', 'order');
+//         order.textContent = orderArray.join(" ");
+//         var checkBox =   document.createElement("input");
+//         checkBox.setAttribute('type', 'checkbox');
+//         checkBox.setAttribute('class', 'checkbox')
+//         order.appendChild(checkBox);
+//         completedList.appendChild(order);
+//     });     
+    
+// }
+
+var getLocalStorage = function() {
+    var pending = localStorage.getItem('pending-orders');
+    var pendingArray = JSON.parse(pending);
+    if (pendingArray != null) {
+        pendingArray.forEach(function(order) {
+            addPendingOrderOnPage(order);
+        });
+    }
+    // var completed = localStorage.getItem('completed-orders')
+    // var completedArray = JSON.parse(completed);
+    // addCompletedOrderOnPage(completedArray);
+}
+
+getLocalStorage();
 
 var updateOrderLists = function() {
     localStorage.setItem('pending-orders', JSON.stringify(orderListArray));
-    localStorage.setItem('completed-orders', JSON.stringify(completedOrderArray))
+    // localStorage.setItem('completed-orders', JSON.stringify(completedOrderArray))
 }
 
 var handleSubmit = function(event) {
@@ -48,12 +85,9 @@ var handleCompletedButton = function(event) {
     checkBoxOrders = orderList.querySelectorAll('input[type=checkbox]:checked')
     checkBoxOrders.forEach(function(element, position) {
         parent = element.parentElement;
-        console.log(parent);
         completedList.appendChild(parent);
         var order = orderListArray.splice(position, 1);
-        console.log(orderListArray);
         completedOrderArray.push(order);
-        console.log(completedOrderArray);
     });
     updateOrderLists();
 }
@@ -81,4 +115,4 @@ var deleteOrder = function(event) {
 
 coffeeOrderForm.addEventListener('submit', handleSubmit);
 completedOrderForm.addEventListener('submit', handleCompletedButton);
-deleteForm.addEventListener('submit', deleteOrder);
+deleteForm.addEventListener('submit', deleteOrder)
