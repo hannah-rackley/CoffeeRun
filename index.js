@@ -1,21 +1,29 @@
 var URL = "https://dc-coffeerun.herokuapp.com/api/coffeeorders";
-function displayData(orders) {
+var coffeeOrderForm = document.querySelector(".coffee-order-form");
+var deleteForm = document.querySelector(".remove-orders");
+var orderList = document.querySelector('.order-list');
+var orderListArray = [];
+
+function storeData(orders) {
     localStorage.setItem('coffeeOrders', JSON.stringify(orders))
     for (var property in orders) {
         addStoredOrders(orders[property]);
     };
 }
 
-$.get(URL, displayData);
-
-var coffeeOrderForm = document.querySelector(".coffee-order-form");
-var deleteForm = document.querySelector(".remove-orders");
-var orderList = document.querySelector('.order-list');
-var orderListArray = [];
-var deleted;
+$.get(URL, storeData);
 
 var addStoredOrders = function(orderObject) {
-    var orderArray = [orderObject["size"], orderObject["coffee"], "with a shot of ", orderObject["flavor"], "and", orderObject["strength"], "milligrams of caffeine for ", orderObject["emailAddress"]]
+    var orderArray = [
+        orderObject["size"], 
+        orderObject["coffee"], 
+        "with a shot of ", 
+        orderObject["flavor"], 
+        "and", 
+        orderObject["strength"], 
+        "milligrams of caffeine for ", 
+        orderObject["emailAddress"]
+    ];
     var order = document.createElement('li');
     order.setAttribute('class', 'order');
     order.setAttribute('id', orderObject["emailAddress"]);
@@ -24,7 +32,7 @@ var addStoredOrders = function(orderObject) {
     checkBox.setAttribute('type', 'checkbox');
     checkBox.setAttribute('class', 'checkbox')
     order.appendChild(checkBox);
-    orderList.appendChild(order);    
+    orderList.appendChild(order); 
 }
 
 var createOrder = function() {
@@ -62,7 +70,17 @@ var deleteOrder = function(event) {
         if (parent.parentNode) {
             parent.parentNode.removeChild(parent);
             var id = parent.getAttribute('id');
-            deleted = URL + "/" + id;
+            var deleted = URL + "/" + id;
+            $.ajax({
+                url: deleted,
+                type: 'DELETE',
+                success: function(res){
+                    console.log(res);
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            });
         }
     });
 }
