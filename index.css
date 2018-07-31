@@ -19,3 +19,7 @@ body, html {
 .coffee-order-form {
     box-sizing: border-box;
 }
+
+.green {
+    background-color: green;
+}

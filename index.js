@@ -62,28 +62,32 @@ var handleSubmit = function(event) {
     createOrder();
 }
 
-var deleteOrder = function(event) {
+var startTimer = function(event) {
     event.preventDefault();
     checkBoxOrders = orderList.querySelectorAll('input[type=checkbox]:checked')
     checkBoxOrders.forEach(function(element) {
         parent = element.parentElement;
         if (parent.parentNode) {
-            parent.parentNode.removeChild(parent);
-            var id = parent.getAttribute('id');
-            var deleted = URL + "/" + id;
-            $.ajax({
-                url: deleted,
-                type: 'DELETE',
-                success: function(res){
-                    console.log(res);
-                },
-                error: function(err){
-                    console.log(err);
-                }
-            });
+            var deleteOrder = function deleteOrder() {
+                parent.parentNode.removeChild(parent);
+                var id = parent.getAttribute('id');
+                var deleted = URL + "/" + id;
+                $.ajax({
+                    url: deleted,
+                    type: 'DELETE',
+                    success: function(res){
+                        console.log(res);
+                    },
+                    error: function(err){
+                        console.log(err);
+                    }
+                });
+            };
+            parent.setAttribute('class', 'green');
+            setTimeout(deleteOrder, 2000);
         }
     });
 }
 
 coffeeOrderForm.addEventListener('submit', handleSubmit);
-deleteForm.addEventListener('submit', deleteOrder);
+deleteForm.addEventListener('submit', startTimer);
