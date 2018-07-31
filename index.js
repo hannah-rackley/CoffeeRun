@@ -1,22 +1,49 @@
+var URL = "https://dc-coffeerun.herokuapp.com/api/coffeeorders";
+var globalOrders;
+function storeData(orders) {
+    localStorage.setItem('coffeeOrders', JSON.stringify(orders))
+    for (var property in orders) {
+        addStoredOrders(orders[property]);
+    };
+}
+// var myData = {
+//     coffee: 'espresso', 
+//     emailAddress: 'hello@world.com',
+//     strength: 30,
+//     size: "tall",
+//     flavor: "vanilla"
+// }
+// $.post(URL, myData);
+$.get(URL, storeData);
+
+
 var coffeeOrderForm = document.querySelector(".coffee-order-form");
 var deleteForm = document.querySelector(".remove-orders");
-var completedOrderForm = document.querySelector(".change-order-status");
 var orderList = document.querySelector('.order-list');
-var completedList = document.querySelector('.completed-order-list');
 var orderListArray = [];
-var completedOrderArray = [];
+
+var addStoredOrders = function(orderObject) {
+    var orderArray = [orderObject["size"], orderObject["coffee"], "with a shot of ", orderObject["flavor"], "and", orderObject["strength"], "milligrams of caffeine for ", orderObject["emailAddress"]]
+    var order = document.createElement('li');
+    order.setAttribute('class', 'order');
+    order.textContent = orderArray.join(" ");
+    var checkBox = document.createElement("input");
+    checkBox.setAttribute('type', 'checkbox');
+    checkBox.setAttribute('class', 'checkbox')
+    order.appendChild(checkBox);
+    orderList.appendChild(order);    
+}
 
 var addPendingOrderOnPage = function(orderObject) {
-        orderListArray.push(orderObject);
-        var orderArray = [orderObject["Size"], orderObject["Order"], "with a shot of ", orderObject["Flavor"], "and", orderObject["Caffeine"], "milligrams of caffeine for ", orderObject["Email"]]
-        var order = document.createElement('li');
-        order.setAttribute('class', 'order');
-        order.textContent = orderArray.join(" ");
-        var checkBox = document.createElement("input");
-        checkBox.setAttribute('type', 'checkbox');
-        checkBox.setAttribute('class', 'checkbox')
-        order.appendChild(checkBox);
-        orderList.appendChild(order);    
+    var orderArray = [orderObject["Size"], orderObject["Order"], "with a shot of ", orderObject["Flavor"], "and", orderObject["Caffeine"], "milligrams of caffeine for ", orderObject["Email"]]
+    var order = document.createElement('li');
+    order.setAttribute('class', 'order');
+    order.textContent = orderArray.join(" ");
+    var checkBox = document.createElement("input");
+    checkBox.setAttribute('type', 'checkbox');
+    checkBox.setAttribute('class', 'checkbox')
+    order.appendChild(checkBox);
+    orderList.appendChild(order);    
 }
 
 var createOrder = function() {
@@ -36,22 +63,20 @@ var createOrder = function() {
         "Caffeine": caffeineRating.value, 
         "Checkbox": checkBox.checked, 
     }
+    orderListArray.push(orderContent);
     addPendingOrderOnPage(orderContent);
 }
 
-// var addCompletedOrderOnPage = function(array) {
-//     array.forEach(function(order) {
-//         var orderArray = [order["size"], order["Order"], "with a shot of ", order["Flavor"], "and", order["Caffeine"], "milligrams of caffeine for ", order["Email"]]
-//         var order = document.createElement('li');
-//         order.setAttribute('class', 'order');
-//         order.textContent = orderArray.join(" ");
-//         var checkBox =   document.createElement("input");
-//         checkBox.setAttribute('type', 'checkbox');
-//         checkBox.setAttribute('class', 'checkbox')
-//         order.appendChild(checkBox);
-//         completedList.appendChild(order);
-//     });     
-    
+// var compareOrderListArray = function() {
+//     var newArray = [];
+//     var orders = document.querySelectorAll('.order');
+//     console.log(orders);
+//     orderListArray.forEach(function(order) {
+//         if (orders.indexOf(order) > -1) {
+//             newArray.push(order);
+//         }
+//     })
+//     orderListArray = newArray;
 // }
 
 var getLocalStorage = function() {
@@ -62,16 +87,10 @@ var getLocalStorage = function() {
             addPendingOrderOnPage(order);
         });
     }
-    // var completed = localStorage.getItem('completed-orders')
-    // var completedArray = JSON.parse(completed);
-    // addCompletedOrderOnPage(completedArray);
 }
-
-getLocalStorage();
 
 var updateOrderLists = function() {
     localStorage.setItem('pending-orders', JSON.stringify(orderListArray));
-    // localStorage.setItem('completed-orders', JSON.stringify(completedOrderArray))
 }
 
 var handleSubmit = function(event) {
@@ -80,39 +99,22 @@ var handleSubmit = function(event) {
     updateOrderLists();
 }
 
-var handleCompletedButton = function(event) {
-    event.preventDefault();
-    checkBoxOrders = orderList.querySelectorAll('input[type=checkbox]:checked')
-    checkBoxOrders.forEach(function(element, position) {
-        parent = element.parentElement;
-        completedList.appendChild(parent);
-        var order = orderListArray.splice(position, 1);
-        completedOrderArray.push(order);
-    });
-    updateOrderLists();
-}
-
 var deleteOrder = function(event) {
     event.preventDefault();
     checkBoxOrders = orderList.querySelectorAll('input[type=checkbox]:checked')
-    completedCheckBoxOrders = completedList.querySelectorAll('input[type=checkbox]:checked')
     checkBoxOrders.forEach(function(element, position) {
         parent = element.parentElement;
         if (parent.parentNode) {
             parent.parentNode.removeChild(parent);
-            orderListArray.splice(position, 1);
         }
     });
-    completedCheckBoxOrders.forEach(function(element, position) {
-        parent = element.parentElement;
-        if (parent.parentNode) {
-            parent.parentNode.removeChild(parent);
-            completedOrderArray.splice(position, 1);
-        }
-    });
-    updateOrderLists();
+    // updateOrderLists();
 }
 
+getLocalStorage();
+
 coffeeOrderForm.addEventListener('submit', handleSubmit);
-completedOrderForm.addEventListener('submit', handleCompletedButton);
-deleteForm.addEventListener('submit', deleteOrder)
+deleteForm.addEventListener('submit', deleteOrder);
+
+
+//$.ajax('https://dc-coffeerun.herokuapp.com/api/coffeeorders', 
