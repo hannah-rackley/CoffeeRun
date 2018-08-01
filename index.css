@@ -3,11 +3,6 @@ body, html {
     font-family: Roboto, sans-serif;
 }
 
-.green {
-    background-color: green;
-    color: white;
-}
-
 .center {
     border-bottom: 0.2em solid lightsteelblue;
     border-top: 0.2em solid lightsteelblue;
@@ -23,6 +18,11 @@ body, html {
     display: flex;
     justify-content: space-between;
     padding: 0.8em;
+}
+
+.green {
+    background-color: green;
+    color: white;
 }
 
 .completed {
