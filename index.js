@@ -13,6 +13,28 @@ function storeData(orders) {
 
 $.get(URL, storeData);
 
+var startTimer = function(event) {
+    var completedOrderButton = event.target;
+    var parent = completedOrderButton.parentElement;
+    var deleteOrder = function deleteOrder() {
+        parent.parentNode.removeChild(parent);
+        var id = parent.getAttribute('id');
+        var deletedUrl = URL + "/" + id;
+        $.ajax({
+            url: deletedUrl,
+            type: 'DELETE',
+            success: function(res){
+                console.log(res);
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
+    };
+    parent.setAttribute('class', 'green');
+    setTimeout(deleteOrder, 2000);
+}
+
 var addStoredOrders = function(orderObject) {
     var orderArray = [
         orderObject["size"], 
@@ -28,10 +50,12 @@ var addStoredOrders = function(orderObject) {
     order.setAttribute('class', 'order');
     order.setAttribute('id', orderObject["emailAddress"]);
     order.textContent = orderArray.join(" ");
-    var checkBox = document.createElement("input");
-    checkBox.setAttribute('type', 'checkbox');
-    checkBox.setAttribute('class', 'checkbox')
-    order.appendChild(checkBox);
+    var completed = document.createElement("input");
+    completed.setAttribute('type', 'submit');
+    completed.setAttribute('value', 'Order Completed!')
+    completed.setAttribute('class', 'completed')
+    completed.addEventListener('click', startTimer);
+    order.appendChild(completed);
     orderList.appendChild(order); 
 }
 
@@ -41,16 +65,17 @@ var createOrder = function() {
     var size = document.querySelector('[name="size"]:checked');
     var flavorShot = document.querySelector('[name="flavor-shot"]');
     var caffeineRating = document.querySelector('[name="caffeine-rating"]');
-    var checkBox = document.createElement("input");
-    checkBox.setAttribute('type', 'checkbox');
-    checkBox.setAttribute('class', 'checkbox')
+    var completed = document.createElement("input");
+    completed.setAttribute('type', 'submit');
+    completed.setAttribute('value', 'Order Completed!')
+    completed.setAttribute('class', 'completed')
+    completed.addEventListener('submit', startTimer);
     var orderContent = {
         coffee: coffeeOrder.value,
         emailAddress: emailInput.value,
         size: size.value, 
         flavor: flavorShot.value,
         strength: caffeineRating.value, 
-        checkbox: checkBox.checked, 
     }
     orderListArray.push(orderContent);
     addStoredOrders(orderContent);
@@ -62,32 +87,4 @@ var handleSubmit = function(event) {
     createOrder();
 }
 
-var startTimer = function(event) {
-    event.preventDefault();
-    checkBoxOrders = orderList.querySelectorAll('input[type=checkbox]:checked')
-    checkBoxOrders.forEach(function(element) {
-        parent = element.parentElement;
-        if (parent.parentNode) {
-            var deleteOrder = function deleteOrder() {
-                parent.parentNode.removeChild(parent);
-                var id = parent.getAttribute('id');
-                var deleted = URL + "/" + id;
-                $.ajax({
-                    url: deleted,
-                    type: 'DELETE',
-                    success: function(res){
-                        console.log(res);
-                    },
-                    error: function(err){
-                        console.log(err);
-                    }
-                });
-            };
-            parent.setAttribute('class', 'green');
-            setTimeout(deleteOrder, 2000);
-        }
-    });
-}
-
 coffeeOrderForm.addEventListener('submit', handleSubmit);
-deleteForm.addEventListener('submit', startTimer);

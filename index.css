@@ -46,11 +46,6 @@ body, html {
     font-size: 0.8em;
 }
 
-.checkbox:hover {
-    font-size: 1.5em;
-    cursor: pointer;
-}
-
 .green {
     background-color: green;
     color: white;
