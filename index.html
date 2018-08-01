@@ -12,30 +12,30 @@
 </header>
 <body>
     <form class="coffee-order-form" action="" method="post">
-        <label>
-            <span class="label block">Coffee Order</span>
-            <input name="coffee-order" type="text" required>
+        <label class="label">
+            <span>Coffee Order</span>
+            <input name="coffee-order" type="text" class="inputs" required>
         </label>
-        <label>
-            <span class="label block">Email</span>
-            <input name="email" type="email" value="dr@who.com" required>
+        <label class="label">
+            <span>Email</span>
+            <input name="email" type="email" value="dr@who.com" class="inputs" required>
         </label>
         <div>
-            <label class="radio block">
-                <input name="size" type="radio" value="Short" checked>
+            <label class="radio">
+                <input name="size" type="radio" value="Short" class="block" checked>
                 Short
             </label>
-            <label class="radio block">
-                <input name="size" type="radio" value="Tall">
+            <label class="radio">
+                <input name="size" type="radio" value="Tall" class="block">
                 Tall
             </label>
-            <label class="radio block">
-                <input name="size" type="radio" value="Grande">
+            <label class="radio">
+                <input name="size" type="radio" value="Grande" class="block">
                 Grande
             </label>
         </div>
-        <label>
-            <span class="label block">Flavor Shot</span>
+        <label class="label">
+            <span>Flavor Shot</span>
             <select id="coffee-flavors" name='flavor-shot' required>
                 <option value="">Please choose a flavor</option>
                 <option value="none">None</option>
@@ -44,9 +44,9 @@
                 <option value="toffee">Toffee</option>
             </select>
         </label>
-        <label>
-            <span class="label block">Caffeine Rating</span>
-            <input name="caffeine-rating" type="range">
+        <label class="label">
+            <span>Caffeine Rating</span>
+            <input name="caffeine-rating" type="range" class="inputs">
         </label>
         <div>
             <input type="submit" name="submit">
@@ -58,10 +58,7 @@
         <ul class="order-list"></ul>
     </div>
     <form class="remove-orders" action="" method="post">
-        <label class="block">
-            Delete Selected Orders
-            <input type="submit" value="Delete" name="delete">
-        </label>
+        <input type="submit" value="Order Completed!" name="delete" class='block'>
     </form>
     <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
