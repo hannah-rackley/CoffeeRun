@@ -20,25 +20,25 @@
             <span>Email</span>
             <input name="email" type="email" value="dr@who.com" class="inputs" required>
         </label>
-        <div>
-            <label class="radio">
-                <input name="size" type="radio" value="Short" class="block" checked>
-                Short
+        <div class="radio">
+            <label class="radio-buttons">
+                <input name="size" type="radio" value="Short" checked>
+                <span>Short</span>
             </label>
-            <label class="radio">
-                <input name="size" type="radio" value="Tall" class="block">
-                Tall
+            <label class="radio-buttons">
+                <input name="size" type="radio" value="Tall">
+                <span>Tall</span>
             </label>
-            <label class="radio">
-                <input name="size" type="radio" value="Grande" class="block">
-                Grande
+            <label class="radio-buttons">
+                <input name="size" type="radio" value="Grande">
+                <span>Grande</span>
             </label>
         </div>
         <label class="label">
             <span>Flavor Shot</span>
-            <select id="coffee-flavors" name='flavor-shot' required>
-                <option value="">Please choose a flavor</option>
-                <option value="none">None</option>
+            <select id="coffee-flavors" name='flavor-shot' class="inputs">
+                <option value="">None</option>
+                <option value="caramel">Caramel</option>
                 <option value="chocolate">Chocolate</option>
                 <option value='vanilla'>Vanilla</option>
                 <option value="toffee">Toffee</option>
@@ -58,7 +58,7 @@
         <ul class="order-list"></ul>
     </div>
     <form class="remove-orders" action="" method="post">
-        <input type="submit" value="Order Completed!" name="delete" class='block'>
+        <input type="submit" value="Order Completed!" name="delete" class='completed block'>
     </form>
     <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"

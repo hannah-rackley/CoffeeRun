@@ -1,10 +1,16 @@
 body, html {
     width: 100%;
     font-size: 1.1em;
-    padding: 1em;
     font-family: Roboto, sans-serif;
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+.coffee-order-form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
     align-items: center;
 }
 
@@ -14,9 +20,15 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 1em;
 }
 .radio {
+    margin-bottom: 1em;
+}
+
+.radio-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     margin-top: 1em;
 }
 
@@ -27,13 +39,25 @@ body, html {
 }
 
 .inputs {
-    width: 30em;
+    width: 20em;
+    height: 1.5em;
+    border-radius: 0.8em;
+    margin-top: 0.5em;
+    font-size: 0.8em;
 }
 
-.coffee-order-form {
-    box-sizing: border-box;
+.checkbox:hover {
+    font-size: 1.5em;
+    cursor: pointer;
 }
 
 .green {
     background-color: green;
+    color: white;
+}
+
+.completed:hover {
+    font-weight: bold;
+    color:white;
+    background-color: darkolivegreen;
 }
