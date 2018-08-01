@@ -1,6 +1,5 @@
-var URL = "https://dc-coffeerun.herokuapp.com/api/coffeeorders";
+var url = "https://dc-coffeerun.herokuapp.com/api/coffeeorders";
 var coffeeOrderForm = document.querySelector(".coffee-order-form");
-var deleteForm = document.querySelector(".remove-orders");
 var orderList = document.querySelector('.order-list');
 var orderListArray = [];
 
@@ -11,7 +10,7 @@ function storeData(orders) {
     };
 }
 
-$.get(URL, storeData);
+$.get(url, storeData);
 
 var startTimer = function(event) {
     var completedOrderButton = event.target;
@@ -19,7 +18,7 @@ var startTimer = function(event) {
     var deleteOrder = function deleteOrder() {
         parent.parentNode.removeChild(parent);
         var id = parent.getAttribute('id');
-        var deletedUrl = URL + "/" + id;
+        var deletedUrl = url + "/" + id;
         $.ajax({
             url: deletedUrl,
             type: 'DELETE',
@@ -65,11 +64,6 @@ var createOrder = function() {
     var size = document.querySelector('[name="size"]:checked');
     var flavorShot = document.querySelector('[name="flavor-shot"]');
     var caffeineRating = document.querySelector('[name="caffeine-rating"]');
-    var completed = document.createElement("input");
-    completed.setAttribute('type', 'submit');
-    completed.setAttribute('value', 'Order Completed!')
-    completed.setAttribute('class', 'completed')
-    completed.addEventListener('submit', startTimer);
     var orderContent = {
         coffee: coffeeOrder.value,
         emailAddress: emailInput.value,
@@ -79,7 +73,7 @@ var createOrder = function() {
     }
     orderListArray.push(orderContent);
     addStoredOrders(orderContent);
-    $.post(URL, orderContent);
+    $.post(url, orderContent);
 }
 
 var handleSubmit = function(event) {
