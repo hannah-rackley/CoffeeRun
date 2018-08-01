@@ -1,5 +1,5 @@
 var url = "https://dc-coffeerun.herokuapp.com/api/coffeeorders";
-var coffeeOrderForm = document.querySelector(".coffee-order-form");
+var coffeeOrderForm = document.querySelector(".data-coffee-order");
 var orderList = document.querySelector('.order-list');
 var orderListArray = [];
 
@@ -30,7 +30,7 @@ var startTimer = function(event) {
             }
         });
     };
-    parent.setAttribute('class', 'green');
+    parent.setAttribute('class', 'green order');
     setTimeout(deleteOrder, 2000);
 }
 
@@ -59,11 +59,11 @@ var addStoredOrders = function(orderObject) {
 }
 
 var createOrder = function() {
-    var coffeeOrder = document.querySelector('[name="coffee-order"]');
-    var emailInput = document.querySelector('[name="email"]');
+    var coffeeOrder = document.querySelector('[name="coffee"]');
+    var emailInput = document.querySelector('[name="emailAddress"]');
     var size = document.querySelector('[name="size"]:checked');
-    var flavorShot = document.querySelector('[name="flavor-shot"]');
-    var caffeineRating = document.querySelector('[name="caffeine-rating"]');
+    var flavorShot = document.querySelector('[name="flavor"]');
+    var caffeineRating = document.querySelector('[name="strength"]');
     var orderContent = {
         coffee: coffeeOrder.value,
         emailAddress: emailInput.value,
